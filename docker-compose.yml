@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  django-app:
+    build:
+      context: ./django_fullstack
+      dockerfile: Dockerfile
+    container_name: task_flow_django_app
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./django_fullstack:/app
+  postgres:
+    image: "postgres:17"
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"

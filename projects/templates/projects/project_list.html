@@ -1,0 +1,27 @@
+<h1>My Projects</h1>
+
+<div>
+  <a href="{% url 'project_create' %}">Create Project</a>
+</div>
+
+<div>
+
+  {% if request.user.is_superuser %}
+    <a href="{% url 'tag_list' %}">Manage Tags</a>
+  {% endif %}
+
+</div>
+<ul>
+  {% for project in projects %}
+    <li>
+      <a href="{% url 'project_detail' project.pk %}">
+        {{ project.name }}
+      </a>
+    </li>
+  {% endfor %}
+</ul>
+
+<form method="post" action="{% url 'logout' %}" style="display:inline;">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>

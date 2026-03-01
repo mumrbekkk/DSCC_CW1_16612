@@ -1,4 +1,7 @@
 FROM python:3.13
+
+RUN apt-get update && apt-get install -y netcat-openbsd
+
 WORKDIR /usr/local/app
 
 
@@ -8,9 +11,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 EXPOSE 8000
 
-CMD ["python3", "manage.py", "migrate"]
+COPY entrypoint.sh /entrypoint.sh
 
-CMD ["gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000"]
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 
 

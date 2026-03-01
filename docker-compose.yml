@@ -1,23 +1,42 @@
-version: "3.9"
-
 services:
   django-app:
     build:
-      context: ./django_fullstack
+      context: ./
       dockerfile: Dockerfile
     container_name: task_flow_django_app
+    restart: always
     env_file:
       - .env
     depends_on:
       - postgres
-    ports:
-      - "8000:8000"
     volumes:
-      - ./django_fullstack:/app
+      - static_volume:/static
+      - media_volume:/media
+
   postgres:
     image: "postgres:17"
+    container_name: task_flow_postgres
     restart: always
     env_file:
       - .env
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:latest
+    container_name: task_flow_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - static_volume:/static
+      - media_volume:/media
+    depends_on:
+      - django-app
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

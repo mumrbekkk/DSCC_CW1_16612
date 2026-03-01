@@ -4,9 +4,16 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+
+# ENVIRONMENT VARIABLES available to all jobs
+#env:
+# DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/my-django-app
 
 jobs:
-  build-and-test:
+  test:
     runs-on: ubuntu-latest
 
     services:
@@ -31,10 +38,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.12
+          python-version: '3.12'
 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run migrations
@@ -42,11 +50,13 @@ jobs:
           POSTGRES_DB: test_db
           POSTGRES_USER: test_user
           POSTGRES_PASSWORD: test_password
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
         run: |
           python3 manage.py migrate
 
       - name: Run tests
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
         run: |
           python manage.py test

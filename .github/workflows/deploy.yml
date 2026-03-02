@@ -95,9 +95,9 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.host }}
-          username: ${{ secrets.username }}
-          key: ${{ secrets.ssh_key }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd ~/app
             docker compose pull

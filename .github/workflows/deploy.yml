@@ -84,3 +84,25 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/taskflow-django:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/taskflow-django:${{ github.sha }}
+
+  deploy:
+    name: Deploy to Azure VM
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.host }}
+          username: ${{ secrets.username }}
+          key: ${{ secrets.ssh_key }}
+          script: |
+            cd ~/app
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
+            echo 'Deploy succeeded!'
+            
+

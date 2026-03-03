@@ -31,11 +31,14 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 COPY --chown=appuser:appgroup . .
 
+RUN mkdir -p static media && \
+    chown -R appuser:appgroup static media
+
 RUN chmod +x /app/entrypoint.sh
 
 USER appuser
 
-EXPOSE 8008
+EXPOSE 8000
 
 ENTRYPOINT ["/app/entrypoint.sh"]
 

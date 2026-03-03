@@ -12,6 +12,10 @@ urlpatterns = [
 
     path("<int:project_pk>/tasks/create/", task_views.task_create, name="task_create"),
     path("<int:project_pk>/tasks/<int:pk>/edit/", task_views.task_update, name="task_update"),
-    path("<int:project_pk>/tasks/<int:pk>/delete/confirmation", task_views.task_delete_confirmation, name="task_delete_confirmation"),
+    path(
+        "<int:project_pk>/tasks/<int:pk>/delete/confirmation",
+        task_views.task_delete_confirmation,
+        name="task_delete_confirmation"
+    ),
     path("<int:project_pk>/tasks/<int:pk>/delete/", task_views.task_delete, name="task_delete"),
 ]

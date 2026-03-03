@@ -6,6 +6,7 @@ from .models import Project
 
 User = get_user_model()
 
+
 class ProjectModelTest(TestCase):
     url_names = [
         "project_list",
@@ -30,7 +31,6 @@ class ProjectModelTest(TestCase):
 
     def test_project_str(self):
         self.assertEqual(str(self.project), self.TEST_PROJECT_NAME)
-
 
     def test_project_create(self):
         self.assertEqual(self.project.name, self.TEST_PROJECT_NAME)
@@ -76,7 +76,3 @@ class ProjectModelTest(TestCase):
         )
 
         self.assertEqual(Project.objects.count(), 0)
-
-
-
-

@@ -147,4 +147,3 @@ AUTH_USER_MODEL = "users.User"
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/projects/"
 LOGOUT_REDIRECT_URL = "/login/"
-

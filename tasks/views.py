@@ -49,6 +49,3 @@ def task_delete(request, project_pk, pk):
     task = get_object_or_404(Task, pk=pk, project__owner=request.user)
     task.delete()
     return redirect("project_detail", pk=project_pk)
-
-
-

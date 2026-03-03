@@ -31,11 +31,13 @@ ENV PATH="/opt/venv/bin:$PATH"
 
 COPY --chown=appuser:appgroup . .
 
+RUN chmod +x /app/entrypoint.sh
+
 USER appuser
 
 EXPOSE 8008
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 
 

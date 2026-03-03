@@ -47,7 +47,7 @@ def project_delete_confirmation(request, pk):
     project = get_object_or_404(Project, pk=pk, owner=request.user)
     return render(
         request,
-        "projects/project_confirm_delete.html",
+        "projects/project_delete_confirmation.html",
         {"project": project},
     )
 

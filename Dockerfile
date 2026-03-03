@@ -14,29 +14,24 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 
-FROM python:3.13-slim
-
-RUN groupadd --gid 1000 appgroup && \
-    useradd --uid 1000 --gid appgroup --shell /bin/bash --create-home appuser
+FROM python:3.13-slim AS production
 
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
-    netcat-openbsd \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
+
 
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-COPY --chown=appuser:appgroup . .
+COPY . .
 
-RUN mkdir -p static media && \
-    chown -R appuser:appgroup static media
+RUN python manage.py collectstatic --noinput
 
 RUN chmod +x /app/entrypoint.sh
-
-USER appuser
 
 EXPOSE 8000
 

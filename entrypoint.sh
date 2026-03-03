@@ -1,5 +1,9 @@
 #!/bin/sh
 
+echo "Fixing permissions..."
+chown -R appuser:appgroup /static
+chown -R appuser:appgroup /media
+
 echo "Waiting for PostgreSQL..."
 
 while ! nc -z postgres 5432; do

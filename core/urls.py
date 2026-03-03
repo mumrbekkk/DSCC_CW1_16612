@@ -19,12 +19,12 @@ from django.urls import path, include
 
 from django.contrib.auth import views as auth_views
 
-from users.views import register
+from apps.users.views import register
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("projects/", include("projects.urls")),
-    path("tags/", include("tags.urls")),
+    path("projects/", include("apps.projects.urls")),
+    path("tags/", include("apps.tags.urls")),
 
     path("login/", auth_views.LoginView.as_view(), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),

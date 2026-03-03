@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 if not SECRET_KEY:
@@ -32,10 +32,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'users',
-    'projects',
-    'tasks',
-    'tags',
+    'apps.users',
+    'apps.projects',
+    'apps.tasks',
+    'apps.tags',
 ]
 
 MIDDLEWARE = [

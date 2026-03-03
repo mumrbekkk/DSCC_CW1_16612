@@ -2,9 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
-from projects.models import Project
-from tasks.forms import TaskForm
-from tasks.models import Task
+from apps.projects.models import Project
+from apps.tasks.forms import TaskForm
+from apps.tasks.models import Task
 
 
 @login_required

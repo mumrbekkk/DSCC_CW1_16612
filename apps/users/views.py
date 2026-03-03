@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from users.forms import CustomUserCreationForm
+from apps.users.forms import CustomUserCreationForm
 
 
 def register(request):

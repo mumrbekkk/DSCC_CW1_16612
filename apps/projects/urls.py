@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from tasks import views as task_views
+from apps.tasks import views as task_views
 
 urlpatterns = [
     path("", views.project_list, name="project_list"),

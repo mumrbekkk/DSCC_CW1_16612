@@ -1,6 +1,6 @@
 from django.db import models
-from projects.models import Project
-from tags.models import Tag
+from apps.projects.models import Project
+from apps.tags.models import Tag
 
 
 class Task(models.Model):

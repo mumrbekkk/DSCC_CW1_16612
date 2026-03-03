@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_POST
 
-from common.auth.superuser_required import superuser_required
+from apps.common.auth.superuser_required import superuser_required
 from .models import Tag
 from .forms import TagForm
 

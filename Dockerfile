@@ -18,8 +18,10 @@ FROM python:3.13-slim AS production
 
 WORKDIR /app
 
+# Netcat for entrypoint
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 

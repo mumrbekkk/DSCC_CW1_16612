@@ -4,6 +4,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = [host.strip() for host in os.getenv("ALLOWED_HOSTS", "").split(",") if host]
 
+CSRF_TRUSTED_ORIGINS = ["https://taskflow.lccrm.uz"]
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",

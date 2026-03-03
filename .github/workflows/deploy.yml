@@ -54,7 +54,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run flake8
-        run: flake8 --max-line-length=120 --exclude=migrations
+        run: flake8 . --max-line-length=120 --exclude=migrations
 
       - name: Run migrations
         run: |
@@ -103,6 +103,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
+            set -e
             cd ~/app
             docker compose pull
             docker compose up -d --remove-orphans

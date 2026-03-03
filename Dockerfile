@@ -16,6 +16,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 FROM python:3.13-slim AS production
 
+RUN groupadd --gid 1000 appgroup && \
+    useradd --uid 1000 --gid appgroup --shell /bin/bash --create-home appuser
+
 WORKDIR /app
 
 # Netcat for entrypoint
@@ -29,11 +32,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /opt/venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-COPY . .
+COPY --chown=appuser:appgroup . .
 
-RUN python manage.py collectstatic --noinput
+RUN mkdir -p staticfiles media && \
+    chown -R appuser:appgroup staticfiles media
 
 RUN chmod +x /app/entrypoint.sh
+
+USER appuser
 
 EXPOSE 8000
 

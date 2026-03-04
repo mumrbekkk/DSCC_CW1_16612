@@ -1,16 +1,4 @@
 services:
-  django-app:
-    image: mumrbekkk/taskflow-django:latest
-    container_name: task_flow_django_app
-    restart: always
-    env_file:
-      - .env
-    depends_on:
-      - postgres
-    volumes:
-      - static_volume:/static
-      - media_volume:/media
-
   postgres:
     image: postgres:17
     container_name: task_flow_postgres
@@ -24,6 +12,29 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - app_network
+
+  django-app:
+    image: mumrbekkk/taskflow-django:latest
+    container_name: task_flow_django_app
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - static_volume:/static
+      - media_volume:/media
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/health/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - app_network
 
   nginx:
     image: nginx:latest
@@ -38,9 +49,16 @@ services:
       - static_volume:/static
       - media_volume:/media
     depends_on:
-      - django-app
+      django-app:
+        condition: service_healthy
+    networks:
+      - app_network
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
+
+networks:
+  app_network:
+    driver: bridge

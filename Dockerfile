@@ -21,12 +21,12 @@ RUN groupadd --gid 1000 appgroup && \
 
 WORKDIR /app
 
-# Netcat for entrypoint
+# Netcat for entrypoint & curl for healthcheck (*may add up image size)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq5 \
     netcat-openbsd \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
 
 COPY --from=builder /opt/venv /opt/venv

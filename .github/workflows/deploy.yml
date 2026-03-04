@@ -62,6 +62,9 @@ jobs:
         run: |
           python3 manage.py migrate
 
+      - name: Django production check
+        run: python manage.py check --deploy
+
       - name: Run tests
         run: |
           python manage.py test

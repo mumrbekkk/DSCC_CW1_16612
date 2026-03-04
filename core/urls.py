@@ -23,13 +23,18 @@ from apps.users.views import register
 
 
 from django.http import JsonResponse
+from django.shortcuts import redirect
+
 
 def health_check(request):
     return JsonResponse({"status": "ok"})
 
+def home(request):
+    return redirect("projects")
 
 urlpatterns = [
     path("health/", health_check),
+    path("", home),
 
     path('admin/', admin.site.urls),
     path("projects/", include("apps.projects.urls")),

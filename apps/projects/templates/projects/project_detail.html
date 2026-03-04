@@ -1,52 +1,84 @@
-<h1>Project: {{ project.name }}</h1>
+{% extends "base.html" %}
 
-<p>{{ project.description }}</p>
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>{{ project.name }}</h2>
+        <p class="text-muted">{{ project.description }}</p>
+    </div>
+
+    <div>
+        <a href="{% url 'project_update' project.pk %}" class="btn btn-outline-secondary btn-sm">
+            Edit
+        </a>
+
+        <a href="{% url 'project_delete_confirmation' project.pk %}" class="btn btn-outline-danger btn-sm">
+            Delete
+        </a>
+    </div>
+</div>
 
 <hr>
 
-<p>
-  <a href="{% url 'project_update' project.pk %}">Edit Project</a> |
-  <a href="{% url 'project_delete_confirmation' project.pk %}">Delete Project</a>
-</p>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Tasks</h4>
 
-<hr>
+    <a href="{% url 'task_create' project.pk %}" class="btn btn-primary btn-sm">
+        + Add Task
+    </a>
+</div>
 
-<h2>Tasks</h2>
+<div class="row">
+{% for task in project.tasks.all %}
 
-<p>
-  <a href="{% url 'task_create' project.pk %}">+ Add New Task</a>
-</p>
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
 
-{% if project.tasks.exists %}
-  <ul>
-    {% for task in project.tasks.all %}
-      <li>
-        <strong>{{ task.title }}</strong>
-        {% if task.is_completed %}
-          (Completed)
-        {% endif %}
+                <h5 class="card-title">
+                    {{ task.title }}
 
-        <br>
+                    {% if task.is_completed %}
+                        <span class="badge bg-success">Completed</span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    {% endif %}
+                </h5>
 
-        {% if task.description %}
-          {{ task.description }}
-          <br>
-        {% endif %}
+                {% if task.description %}
+                    <p class="card-text">
+                        {{ task.description }}
+                    </p>
+                {% endif %}
 
-        {% if task.tags.exists %}
-          Tags:
-          {% for tag in task.tags.all %}
-            {{ tag.name }}{% if not forloop.last %}, {% endif %}
-          {% endfor %}
-          <br>
-        {% endif %}
+                {% if task.tags.exists %}
+                    <div class="mb-2">
+                        {% for tag in task.tags.all %}
+                            <span class="badge bg-secondary">
+                                {{ tag.name }}
+                            </span>
+                        {% endfor %}
+                    </div>
+                {% endif %}
 
-        <a href="{% url 'task_update' project.pk task.pk %}">Edit</a> |
-        <a href="{% url 'task_delete_confirmation' project.pk task.pk %}">Delete</a>
-      </li>
-      <br>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>No tasks yet.</p>
-{% endif %}
+                <a href="{% url 'task_update' project.pk task.pk %}" class="btn btn-outline-primary btn-sm">
+                    Edit
+                </a>
+
+                <a href="{% url 'task_delete_confirmation' project.pk task.pk %}" class="btn btn-outline-danger btn-sm">
+                    Delete
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+{% empty %}
+
+<p>No tasks yet.</p>
+
+{% endfor %}
+</div>
+
+{% endblock %}

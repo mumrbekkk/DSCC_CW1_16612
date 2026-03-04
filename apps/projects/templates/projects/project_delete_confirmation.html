@@ -1,8 +1,39 @@
-<h2>Are you sure you want to delete "{{ project.name }}"?</h2>
+{% extends "base.html" %}
 
-<form method="post" action="{% url 'project_delete' project.pk %}">
-  {% csrf_token %}
-  <button type="submit">Confirm Delete</button>
-</form>
+{% block content %}
 
-<a href="{% url 'project_detail' project.pk %}">Cancel</a>
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow-sm border-danger">
+            <div class="card-body text-center">
+
+                <h4 class="text-danger mb-3">
+                    ⚠ Delete Project
+                </h4>
+
+                <p>
+                    Are you sure you want to delete
+                    <strong>"{{ project.name }}"</strong>?
+                </p>
+
+                <form method="post" action="{% url 'project_delete' project.pk %}">
+                    {% csrf_token %}
+
+                    <button type="submit" class="btn btn-danger">
+                        Confirm Delete
+                    </button>
+
+                    <a href="{% url 'project_detail' project.pk %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

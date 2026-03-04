@@ -39,7 +39,7 @@ def project_update(request, pk):
     if form.is_valid():
         form.save()
         return redirect("project_list")
-    return render(request, "projects/project_form.html", {"form": form})
+    return render(request, "projects/project_form.html", {"form": form, "project": project})
 
 
 @login_required

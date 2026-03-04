@@ -1,6 +1,58 @@
-<h2>Task Form</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Save</button>
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h3 class="mb-4">Task Form</h3>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.description.label_tag }}
+                        {{ form.description }}
+                    </div>
+
+                    <div class="mb-3">
+                        {{ form.tags.label_tag }}
+                        {{ form.tags }}
+                    </div>
+
+                    <div class="form-check mb-3">
+                        {{ form.is_completed }}
+                        {{ form.is_completed.label_tag }}
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        Save Task
+                    </button>
+
+                    {% if project %}
+                      <a href="{% url 'project_detail' project.pk %}" class="btn btn-secondary">
+                          Cancel
+                      </a>
+                    {% else %}
+                      <a href="{% url 'project_list' %}" class="btn btn-secondary">
+                          Cancel
+                      </a>
+                    {% endif %}
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,15 +1,49 @@
-<h1>Tags</h1>
+{% extends "base.html" %}
 
-<a href="{% url 'tag_create' %}">+ Create Tag</a>
+{% block content %}
 
-<ul>
-  {% for tag in tags %}
-    <li>
-      {{ tag.name }}
-      <a href="{% url 'tag_update' tag.pk %}">Edit</a>
-      <a href="{% url 'tag_delete_confirmation' tag.pk %}">Delete</a>
-    </li>
-  {% empty %}
-    <li>No tags yet.</li>
-  {% endfor %}
-</ul>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Tags</h1>
+
+    <a href="{% url 'tag_create' %}" class="btn btn-primary">
+        Create Tag
+    </a>
+</div>
+
+<div class="row">
+
+{% for tag in tags %}
+
+    <div class="col-md-3 mb-3">
+        <div class="card shadow-sm border-0 h-100">
+
+            <div class="card-body">
+
+                <span class="badge bg-info fs-6 mb-3 px-3 py-2">
+                    {{ tag.name }}
+                </span>
+
+                <div class="d-flex gap-2">
+                    <a href="{% url 'tag_update' tag.pk %}" class="btn btn-sm btn-outline-primary">
+                        Edit
+                    </a>
+
+                    <a href="{% url 'tag_delete_confirmation' tag.pk %}" class="btn btn-sm btn-outline-danger">
+                        Delete
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% empty %}
+
+<p>No tags yet.</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

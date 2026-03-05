@@ -52,5 +52,3 @@ class CustomAuthenticationForm(AuthenticationForm):
             "placeholder": "Password"
         })
     )
-
-

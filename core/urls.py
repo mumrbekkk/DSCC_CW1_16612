@@ -30,8 +30,10 @@ from django.shortcuts import redirect
 def health_check(request):
     return JsonResponse({"status": "ok"})
 
+
 def home(request):
     return redirect("project_list")
+
 
 urlpatterns = [
     path("health/", health_check),

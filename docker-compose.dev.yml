@@ -10,7 +10,7 @@ services:
     depends_on:
       - postgres
     ports:
-      - "8008:8000"
+      - "8000:8000"
 
   postgres:
     image: "postgres:17"
